@@ -232,16 +232,4 @@ Save the file. No server restart is required.
 
 **Bella Gnana Charmika**
 
-B.Tech – Computer Science and Engineering
-
 ---
-
-# 📄 License
-
-This project was developed as part of the **CodeAlpha Full Stack Development Internship** for educational purposes.
-
----
-
-## ⭐ Support
-
-If you found this project helpful, please consider giving it a **⭐ Star** on GitHub.#
