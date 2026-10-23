@@ -1,4 +1,4 @@
-const apiBase = "http://localhost:5000";
+const apiBase = window.location.origin;
 const productsDiv = document.getElementById("products");
 const productDiv = document.getElementById("product");
 const shopNowButton = document.getElementById("shopNowButton");
