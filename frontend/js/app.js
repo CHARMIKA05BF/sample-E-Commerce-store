@@ -1,6 +1,20 @@
 const apiBase = "http://localhost:5000";
 const productsDiv = document.getElementById("products");
 const productDiv = document.getElementById("product");
+const shopNowButton = document.getElementById("shopNowButton");
+
+function isAuthenticated() {
+	return Boolean(localStorage.getItem("currentUser"));
+}
+
+if (shopNowButton) {
+	shopNowButton.addEventListener("click", (event) => {
+		if (!isAuthenticated()) {
+			event.preventDefault();
+			window.location.href = "register.html";
+		}
+	});
+}
 
 if (productsDiv) {
 	loadProductList();
@@ -85,6 +99,11 @@ async function loadProductDetail() {
 }
 
 function addToCart(id) {
+	if (!isAuthenticated()) {
+		window.location.href = "register.html";
+		return;
+	}
+
 	const cart = JSON.parse(localStorage.getItem("cart")) || [];
 	cart.push(id);
 	localStorage.setItem("cart", JSON.stringify(cart));

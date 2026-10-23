@@ -1,83 +1,71 @@
-const registerForm =
-document.getElementById(
-"registerForm"
-);
+const registerForm = document.getElementById("registerForm");
 
-if(registerForm){
+if (registerForm) {
+	registerForm.addEventListener("submit", async (event) => {
+		event.preventDefault();
 
-registerForm.addEventListener(
-"submit",
-async(e)=>{
+		const user = {
+			name: document.getElementById("name").value,
+			email: document.getElementById("email").value,
+			password: document.getElementById("password").value,
+		};
 
-e.preventDefault();
+		try {
+			const response = await fetch("http://localhost:5000/users/register", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(user),
+			});
 
-await fetch(
-"http://localhost:5000/users/register",
-{
-method:"POST",
+			if (!response.ok) {
+				throw new Error("Registration failed");
+			}
 
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:JSON.stringify({
-name:
-document.getElementById("name").value,
-
-email:
-document.getElementById("email").value,
-
-password:
-document.getElementById("password").value
-})
-});
-
-alert("Registered");
-});
+			localStorage.setItem(
+				"currentUser",
+				JSON.stringify({ name: user.name, email: user.email })
+			);
+			alert("Registered");
+			window.location.href = "index.html";
+		} catch (error) {
+			alert("Unable to register right now. Please try again.");
+		}
+	});
 }
 
-const loginForm =
-document.getElementById(
-"loginForm"
-);
+const loginForm = document.getElementById("loginForm");
 
-if(loginForm){
+if (loginForm) {
+	loginForm.addEventListener("submit", async (event) => {
+		event.preventDefault();
 
-loginForm.addEventListener(
-"submit",
-async(e)=>{
+		try {
+			const response = await fetch("http://localhost:5000/users/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email: document.getElementById("email").value,
+					password: document.getElementById("password").value,
+				}),
+			});
+			const data = await response.json();
 
-e.preventDefault();
-
-const response =
-await fetch(
-"http://localhost:5000/users/login",
-{
-method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:JSON.stringify({
-email:
-document.getElementById("email").value,
-
-password:
-document.getElementById("password").value
-})
-});
-
-const data =
-await response.json();
-
-if(data.success){
-alert("Login Success");
-}
-else{
-alert("Invalid Credentials");
-}
-});
+			if (data.success) {
+				localStorage.setItem(
+					"currentUser",
+					JSON.stringify({ name: data.user.name, email: data.user.email })
+				);
+				alert("Login Success");
+				window.location.href = "index.html";
+			} else {
+				alert("Invalid Credentials");
+			}
+		} catch (error) {
+			alert("Unable to log in right now. Please try again.");
+		}
+	});
 }
