@@ -4,7 +4,7 @@ const cartSummary = document.getElementById("cartSummary");
 const cartTotal = document.getElementById("cartTotal");
 const emptyState = document.getElementById("emptyState");
 const checkoutButton = document.getElementById("checkoutButton");
-const apiBase = "http://localhost:5000";
+const apiBase = window.location.origin;
 
 if (cartItems) {
 	renderCart();
