@@ -1,3 +1,4 @@
+const apiBase = window.location.origin;
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
@@ -11,7 +12,7 @@ if (registerForm) {
 		};
 
 		try {
-			const response = await fetch("http://localhost:5000/users/register", {
+			const response = await fetch(`${apiBase}/users/register`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -42,7 +43,7 @@ if (loginForm) {
 		event.preventDefault();
 
 		try {
-			const response = await fetch("http://localhost:5000/users/login", {
+			const response = await fetch(`${apiBase}/users/login`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
